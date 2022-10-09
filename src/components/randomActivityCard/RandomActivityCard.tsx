@@ -15,14 +15,11 @@ const RandomActivityCard: FC<RandomActivityCardProps> = ({ activity, isLoading, 
     for (let i = 0; i < participantsNumber; i++) participantsArray.push(i)
 
     useEffect(() => {
-        const actOnFav = getFavoriteByKey(activity.key)
-        console.log({ actOnFav });
-
+        const actOnFav = getFavoriteByKey(activity?.key)
         setIsInFavorites(Boolean(activity?.key && actOnFav?.key === activity?.key))
     }, [activity, favorites])
 
     const saveToFavorite = () => {
-
         saveFavorite(activity)
         setIsInFavorites(true)
     }
