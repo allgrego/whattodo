@@ -1,20 +1,13 @@
-import { dehydrate, useQueryClient, QueryClient } from '@tanstack/react-query'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import Card from '../components/card/Card'
 import MainLayout from '../layouts/mainLayout/MainLayout'
-import styles from '../styles/Home.module.css'
-import { PaperClipIcon, UserIcon } from '@heroicons/react/20/solid'
-import Button from '../components/button/Button'
-import LoadingButton from '../components/button/LoadingButton'
 import RandomActivityCard from '../components/randomActivityCard/RandomActivityCard'
 import { getRandomActivity } from '../utils/fetch'
 import { getFavoriteActivities } from '../utils/activities'
 import FavoriteActivitiesCard from '../components/favoriteActivitiesCard/FavoriteActivitiesCard'
-import { Activity } from '../utils/activities.types'
 
 interface HomeProps {
   isLoading?: boolean,
@@ -35,30 +28,21 @@ const Home: NextPage<HomeProps> = () => {
   })
 
   // CLIENT SIDE
-  const { isLoading: isLoadingFavorites, data: favorites, refetch: refetchFavorites } = useQuery(['favorites'], getFavoriteActivities,{
+  const { isLoading: isLoadingFavorites, data: favorites, refetch: refetchFavorites } = useQuery(['favorites'], getFavoriteActivities, {
     refetchInterval: 500
   })
-
-  console.log({ favorites });
 
   const participantsNumber = activity?.participants || 1
   let participantsArray = []
   for (let i = 0; i < participantsNumber; i++) participantsArray.push(i)
 
-  console.log({ activity });
-
-  if (error || !activity) {
-    return <h1>Error fetching</h1>
+  if (error || (!isLoading && !activity)) {
+    return <h1>There was an error fetching data</h1>
   }
 
   const getAnotherRandom = () => {
     refetch()
   }
-
-  const saveToFavorite = () => {
-    refetch()
-  }
-
 
   return (
     <div >
@@ -79,13 +63,13 @@ const Home: NextPage<HomeProps> = () => {
           />
 
           {/* Favorites */}
-          <FavoriteActivitiesCard 
+          <FavoriteActivitiesCard
             allFavorites={favorites}
           />
           <Card>
-          <div className="px-4 py-5 sm:px-6">
-                <h3 className="text-xl font-medium leading-6 text-gray-900 dark:text-white mb-2">Something else here 🚧</h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">Something nice will show up here 👌</p>
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-xl font-medium leading-6 text-gray-900 dark:text-white mb-2">Something else here 🚧</h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500">Something nice will show up here 👌</p>
             </div>
             <div className="border-t border-gray-200 bg-neutral-200 dark:border-slate-700 dark:bg-slate-700 h-full">
               <p className='mx-auto pl-10 pt-5 align-middle my-10'>Under construction🏗👷‍♀️👷‍♂️</p>
