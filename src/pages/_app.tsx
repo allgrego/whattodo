@@ -3,7 +3,11 @@ import type { AppProps } from 'next/app'
 import { useState } from 'react'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface CustomAppProps extends AppProps {
+  pageProps: any,
+}
+
+function MyApp({ Component, pageProps }: CustomAppProps) {
 
   const [queryClient] = useState(() => new QueryClient())
 
