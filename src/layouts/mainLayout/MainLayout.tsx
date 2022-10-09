@@ -1,12 +1,9 @@
-import Image from "next/image";
+
 import { FC } from "react";
-import ThemeToggleSwitch from "../../components/themeToggle.ts/ThemeToggleSwitch";
-import useTheme from "../../components/themeToggle.ts/useTheme";
 import { MainLayoutProps } from "./mainLayout.types";
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
-    const { darkModeActive,
-        setDarkModeActive } = useTheme()
+
     return (
         <div className="bg-gradient-to-br from-sky-300 to-indigo-800 dark:bg-gradient-to-b dark:md:bg-gradient-to-br dark:from-gray-700 dark:to-slate-800 w-full min-h-screen  pt-20 px-5 md:px-2">
             <div className="text-center text-gray-50 font-bold">
